@@ -105,17 +105,14 @@ fn apply_gravity(
     )>,
     time: Res<Time>,
 ) {
-
    let platforms: Vec<(Transform, Sprite)> = {
     let platform_query = queries.p1();
     platform_query.iter().map(|(transform, sprite)| (transform.clone(), sprite.clone())).collect()
    };
    for (mut player, mut transform) in queries.p0().iter_mut() {
     let delta_time = time.delta().as_secs_f32();
-
     player.velocity.y += GRAVITY * delta_time;
     transform.translation += player.velocity * delta_time;
-
     for (platform_transform, platform_sprite) in &platforms {
         if check_collision(&transform, platform_transform, platform_sprite.custom_size.unwrap()) {
             if player.velocity.y < 0.0 {
@@ -171,7 +168,6 @@ fn check_collision(player_transform: &Transform, platform_transform: &Transform,
 
     let player_min = player_transform.translation.truncate() - player_size / 2.0;
     let player_max = player_transform.translation.truncate() + player_size / 2.0;
-
     let platform_min = platform_transform.translation.truncate() - platform_size / 2.0;
     let platform_max= platform_transform.translation.truncate() + platform_size / 2.0;
 
