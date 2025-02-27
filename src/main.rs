@@ -165,6 +165,7 @@ fn jump(
 }
 
 
+
 fn check_collision(player_transform: &Transform, platform_transform: &Transform, platform_size: Vec2) -> bool {
     let player_size = Vec2::new(50.0, 50.0);
 
