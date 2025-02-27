@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use bevy::ecs::system::ParamSet;
 
 const GRAVITY: f32 = -20.8;
-const JUMP_FORCE: f32 = 10000.0;
+const JUMP_FORCE: f32 = 1000.0;
 const MOVE_SPEED: f32 = 100.0;
 const GROUND_LEVEL: f32 = -100.0;
 #[derive(Component)]
@@ -13,7 +13,7 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, setup) // Use `add_systems` with `Startup`
-        .add_systems(Update, (player_movement, apply_gravity, jump, ground_collision)) // Use `add_systems` with `Update`
+        .add_systems(Update, (player_movement, apply_gravity, jump)) // Use `add_systems` with `Update`
         .run();
 }
 
@@ -128,15 +128,15 @@ fn apply_gravity(
    }
 }
 
-fn ground_collision(mut query: Query<(&mut Player, &mut Transform)>) {
-    for (mut player, mut transform) in query.iter_mut() {
-        if transform.translation.y <= GROUND_LEVEL {
-            // transform.translation.y = GROUND_LEVEL;
-            // player.velocity.y = 0.0;
-            // player.is_jumping = false;
-        }
-    }
-}
+// fn ground_collision(mut query: Query<(&mut Player, &mut Transform)>) {
+//     for (mut player, mut transform) in query.iter_mut() {
+//         if transform.translation.y <= GROUND_LEVEL {
+//             // transform.translation.y = GROUND_LEVEL;
+//             // player.velocity.y = 0.0;
+//             // player.is_jumping = false;
+//         }
+//     }
+// }
 
 fn jump(
     keyboard_input: Res<ButtonInput<KeyCode>>,
@@ -149,6 +149,7 @@ fn jump(
         // Check if the player is on a platform
         for (platform_transform, platform_sprite) in platform_query.iter() {
             if check_collision(player_transform, platform_transform, platform_sprite.custom_size.unwrap()) {
+                println!("Colliding with plkatform");
                 can_jump = true;
                 break;
             }
