@@ -125,16 +125,6 @@ fn apply_gravity(
    }
 }
 
-// fn ground_collision(mut query: Query<(&mut Player, &mut Transform)>) {
-//     for (mut player, mut transform) in query.iter_mut() {
-//         if transform.translation.y <= GROUND_LEVEL {
-//             // transform.translation.y = GROUND_LEVEL;
-//             // player.velocity.y = 0.0;
-//             // player.is_jumping = false;
-//         }
-//     }
-// }
-
 fn jump(
     keyboard_input: Res<ButtonInput<KeyCode>>,
     mut query: Query<(&mut Player, &Transform)>,
@@ -160,8 +150,6 @@ fn jump(
         }
     }
 }
-
-
 
 fn check_collision(player_transform: &Transform, platform_transform: &Transform, platform_size: Vec2) -> bool {
     let player_size = Vec2::new(50.0, 50.0);
